@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -19,15 +20,45 @@ final slides = <SlideInfo>[
       'Ipsum consectetur nulla nostrud id ipsum nostrud exercitation consequat enim voluptate excepteur magna.',
       'assets/images/2.png'),
   SlideInfo(
-      'Busca la Comida',
+      'Disfruta con los tuyos!',
       'Dolore aute dolore est occaecat elit ipsum aliqua reprehenderit qui consectetur officia excepteur.',
       'assets/images/3.png'),
 ];
 
-class AppTutorialScreen extends StatelessWidget {
+class AppTutorialScreen extends StatefulWidget {
   static const String name = 'app_tutorial_screen';
 
   const AppTutorialScreen({super.key});
+
+  @override
+  State<AppTutorialScreen> createState() => _AppTutorialScreenState();
+}
+
+class _AppTutorialScreenState extends State<AppTutorialScreen> {
+  late final PageController pageController;
+  bool endReached = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    pageController = PageController();
+    pageController.addListener(() {
+      final page = pageController.page ?? 0;
+
+      if (!endReached && page >= (slides.length - 1.5)) {
+        setState(() {
+          endReached = true;
+        });
+      }
+    });
+
+    @override
+    void dispose() {
+      pageController.dispose();
+      super.dispose();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +67,7 @@ class AppTutorialScreen extends StatelessWidget {
       body: Stack(
         children: [
           PageView(
+            controller: pageController,
             physics: const BouncingScrollPhysics(),
             children: slides.map((slide) => _Slide(slide)).toList(),
           ),
@@ -46,7 +78,20 @@ class AppTutorialScreen extends StatelessWidget {
               child: const Text('Skip'),
               onPressed: () => context.pop(),
             ),
-          )
+          ),
+          endReached
+              ? Positioned(
+                  bottom: 30,
+                  right: 30,
+                  child: FadeInRight(
+                    from: 15,
+                    delay: const Duration(seconds: 1),
+                    child: FilledButton(
+                      onPressed: () => context.pop(),
+                      child: const Text('Start'),
+                    ),
+                  ))
+              : const SizedBox()
         ],
       ),
     );
@@ -63,7 +108,7 @@ class _Slide extends StatelessWidget {
     final captionStyle = Theme.of(context).textTheme.bodySmall;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 30.0),
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Center(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
