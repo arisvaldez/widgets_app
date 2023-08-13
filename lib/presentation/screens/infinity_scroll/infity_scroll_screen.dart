@@ -111,7 +111,7 @@ class _InfityScrollScreenState extends State<InfityScrollScreen> {
                 onRefresh: onRefresh,
                 child: ListView.builder(
                   controller: scrollController,
-                  physics: BouncingScrollPhysics(),
+                  physics:const  BouncingScrollPhysics(),
                   itemCount: imagesIds.length,
                   itemBuilder: (context, index) {
                     return FadeInImage(
@@ -128,10 +128,10 @@ class _InfityScrollScreenState extends State<InfityScrollScreen> {
               ),
               if (isLoading)
                 FadeIn(
-                  delay: Duration(milliseconds: 500),
+                  delay: const Duration(milliseconds: 500),
                   child: Center(
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: colors.primary,

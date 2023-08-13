@@ -16,6 +16,11 @@ class MenuItem {
 
 const appMenuItems = <MenuItem>[
   MenuItem(
+      title: 'Counter',
+      subTitle: 'Counter With RiverPod',
+      link: '/counter',
+      icon: Icons.countertops_outlined),
+  MenuItem(
       title: 'Buttons',
       subTitle: 'Various buttons',
       link: '/buttons',
@@ -55,4 +60,9 @@ const appMenuItems = <MenuItem>[
       subTitle: 'Infinite Scroll and Pull Refresh',
       link: '/infinite',
       icon: Icons.slow_motion_video),
+  MenuItem(
+      title: 'Theme Changer',
+      subTitle: 'Change Application theme',
+      link: '/theme-change',
+      icon: Icons.color_lens_outlined),
 ];
