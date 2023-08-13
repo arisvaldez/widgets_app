@@ -17,7 +17,7 @@ class AppTheme {
   final int selectedColor;
   final bool isDarkMode;
 
-  AppTheme({required this.selectedColor, this.isDarkMode = false});
+  AppTheme({this.selectedColor = 0, this.isDarkMode = false});
 
   ThemeData getTheme() => ThemeData(
         useMaterial3: true,
@@ -27,4 +27,8 @@ class AppTheme {
           centerTitle: false,
         ),
       );
+
+  AppTheme copyWith({int? selectedColor, bool? isDarkMode}) => AppTheme(
+      selectedColor: selectedColor ?? this.selectedColor,
+      isDarkMode: isDarkMode ?? this.isDarkMode);
 }
